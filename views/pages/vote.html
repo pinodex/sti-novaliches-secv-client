@@ -1,0 +1,157 @@
+<div ng-controller="VoteController" class="full-height">
+  <div class="full-height" ng-if="state == 1">
+    <div class="backdrop">
+      <div class="wash"></div>
+      <div class="line"></div>
+    </div>
+
+    <div class="container full-height" ng-click="contextClick">
+      <div class="row main full-height">
+        <div class="navigator full-height" ng-class="{ 'col-xs-5' : !loggedIn, 'col-xs-3' : loggedIn }">
+          <div class="user-info" ng-show="loggedIn">
+            <div class="content">
+              <p>Logged in as</p>
+              <h2>Lorem Ipsum</h2>
+            </div>
+          </div>
+
+          <img src="../assets/img/logo.svg" />
+
+          <ul class="positions fade" ng-show="showBallot">
+            <li ng-repeat="(index, position) in data.positions"
+                ng-class="{ 'active' : positionIndex == index }"
+                ng-click="changePosition(index)">
+
+              <span>{{ position.name }}</span>
+              <span class="icon-check" ng-class="{ 'visible' : getVoteFromPosition(position.id, false) }"></span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="view-parent full-height col-xs">
+          <div class="view login-view" ng-if="!loggedIn">
+            <h1 class="welcome heading">SEC Elections</h1>
+            <h2 class="welcome subheading">cast your vote!</h2>
+
+            <form class="login-form" ng-submit="login()">
+              <div class="form-item">
+                <label for="voterId">Voter&lsquo;s Identification Code:</label>
+                <input id="voterId" ref="voterIdField" type="text" name="voterId" autocomplete="off" />
+              </div>
+
+              <button type="submit">
+                Continue <span class="icon-navigate_next"></span>
+              </button>
+            </form>
+          </div>
+
+          <div class="view after-login-view" ng-if="loggedIn">
+            <div class="view vote-view fade" ng-show="showBallot">
+              <div class="full-height position-view"
+                   ng-repeat="(index, position) in data.positions"
+                   ng-show="positionIndex == index">
+                                                
+                <div class="heading">
+                  <h1>Choose your <strong>{{ position.name }}</strong></h1>
+                  <p>Click on the candidate card to select your vote.</p>
+                </div>
+
+                <div class="row candidates">
+                  <div class="col-md-4"
+                      ng-repeat="(index, candidate) in data.candidates"
+                      ng-if="candidate.position_id == position.id">
+
+                    <div class="candidate"
+                        ng-click="putVote(position.id, candidate.id)"
+                        ng-class="{ 'active' : isVoted(position.id, candidate.id) }">
+                                                        
+                      <div class="selected">
+                        <span class="icon-check"></span>
+                        <span class="text">Selected</span>
+                      </div>
+                              
+                      <img ng-bind:src="'/assets/img/mockup/' + candidate.picture" />
+                                                            
+                      <div class="info">
+                        <h2>{{ candidate.name }}</h2>
+                        <p>{{ candidate.description }}</p> 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="action">
+                  <button ng-click="showVoteSummary()"
+                        ng-disabled="!canFinish()"
+                        ng-if="isLastPosition(index)">
+                            
+                    Finish <span class="icon-navigate_next"></span>
+                  </button>
+
+                  <button ng-click="nextPosition()"
+                    ng-disabled="!getVoteFromPosition(position.id, false)"
+                    ng-if="!isLastPosition(index)">
+                          
+                    Next <span class="icon-navigate_next"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+                  
+            <div class="view summary-view fade full-height" ng-show="showSummary">
+              <h1>Your Digital Ballot</h1>
+
+              <div class="candidates-summary">
+                <div class="row">
+                  <div class="col-xs-6 candidate"
+                        ng-repeat="(position, index) in data.positions"
+                        ng-if="getVoteFromPosition(position.id, false)">
+
+                    <img ng-bind:src="'/assets/img/mockup/' + getVoteFromPosition(position.id).picture" />
+
+                    <div class="info">
+                      <h1>{{ getVoteFromPosition(position.id).name }}</h1>
+                      <p>{{ getPosition(position.id).name }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action">
+                <button ng-click="hideVoteSummary()" ng-disabled="disableActionButton">
+                  Change My Votes
+                </button>
+
+                <button ng-click="submitVotes()" ng-disabled="disableActionButton">
+                  Submit My Votes <span class="icon-check"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="view finished-view fade full-height" ng-show="showFinished">
+              <span class="icon icon-check"></span>
+              <h2>Your vote has been submitted</h2>
+              <h1>Thank you for voting!</h1>
+
+              <button ng-click="logout()">Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="error-view" ng-if="state == 0">
+    <h1>Voting Closed</h1>
+  </div>
+
+  <div class="error-view" ng-if="state == -1">
+    <h1>Connection Error</h1>
+    <p>The server refused the connection</p>
+  </div>
+
+  <div class="error-view" ng-if="state == -2">
+    <h1>Service Unavailable</h1>
+    <p>Please check network connection</p>
+  </div>
+</div>
