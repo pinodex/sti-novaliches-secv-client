@@ -12,10 +12,10 @@
     "dev": "NODE_ENV=dev electron ."
   },
   "dependencies": {
+    "adonis-websocket-client": "^1.0.2",
     "angular": "^1.6.1",
     "angular-animate": "^1.6.1",
-    "angular-route": "^1.6.1",
-    "socket.io-client": "^1.7.2"
+    "angular-route": "^1.6.1"
   },
   "devDependencies": {
     "electron": "^1.4.15",

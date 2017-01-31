@@ -1,5 +1,5 @@
 <div ng-controller="VoteController" class="full-height">
-  <div class="full-height" ng-if="state == 1">
+  <div class="full-height">
     <div class="backdrop">
       <div class="wash"></div>
       <div class="line"></div>
@@ -39,7 +39,7 @@
                 <input id="voterId" ref="voterIdField" type="text" name="voterId" autocomplete="off" />
               </div>
 
-              <button type="submit">
+              <button class="big-button" type="submit">
                 Continue <span class="icon-navigate_next"></span>
               </button>
             </form>
@@ -81,14 +81,16 @@
                 </div>
 
                 <div class="action">
-                  <button ng-click="showVoteSummary()"
+                  <button class="big-button"
+                        ng-click="showVoteSummary()"
                         ng-disabled="!canFinish()"
                         ng-if="isLastPosition(index)">
                             
                     Finish <span class="icon-navigate_next"></span>
                   </button>
 
-                  <button ng-click="nextPosition()"
+                  <button class="big-button"
+                    ng-click="nextPosition()"
                     ng-disabled="!getVoteFromPosition(position.id, false)"
                     ng-if="!isLastPosition(index)">
                           
@@ -118,11 +120,17 @@
               </div>
 
               <div class="action">
-                <button ng-click="hideVoteSummary()" ng-disabled="disableActionButton">
+                <button class="big-button"
+                        ng-click="hideVoteSummary()"
+                        ng-disabled="disableActionButton">
+                  
                   Change My Votes
                 </button>
 
-                <button ng-click="submitVotes()" ng-disabled="disableActionButton">
+                <button class="big-button"
+                        ng-click="submitVotes()"
+                        ng-disabled="disableActionButton">
+                  
                   Submit My Votes <span class="icon-check"></span>
                 </button>
               </div>
@@ -133,25 +141,11 @@
               <h2>Your vote has been submitted</h2>
               <h1>Thank you for voting!</h1>
 
-              <button ng-click="logout()">Continue</button>
+              <button class="big-button" ng-click="logout()">Continue</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="error-view" ng-if="state == 0">
-    <h1>Voting Closed</h1>
-  </div>
-
-  <div class="error-view" ng-if="state == -1">
-    <h1>Connection Error</h1>
-    <p>The server refused the connection</p>
-  </div>
-
-  <div class="error-view" ng-if="state == -2">
-    <h1>Service Unavailable</h1>
-    <p>Please check network connection</p>
   </div>
 </div>

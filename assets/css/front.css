@@ -1434,18 +1434,26 @@ h1 {
   font-weight: 300;
 }
 
-button, input[type="button"] {
+button.big-button, input[type="button"].big-button {
   border: 2px solid #005996;
   background: transparent;
   font-size: 20px;
   padding: 10px 15px;
 }
-button:not(:disabled):hover, input[type="button"]:not(:disabled):hover {
+button.big-button:not(:disabled):hover, input[type="button"].big-button:not(:disabled):hover {
   color: #005996;
 }
-button:disabled, input[type="button"]:disabled {
+button.big-button:disabled, input[type="button"].big-button:disabled {
   border-color: #999;
   color: #999;
+}
+
+form .form-row + .form-row {
+  margin-top: 15px;
+}
+form label {
+  display: block;
+  margin-bottom: 5px;
 }
 
 .container {

@@ -6,8 +6,48 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/front.css" />
 </head>
 <body ng-controller="UIController">
-  <div class="full-height" ng-view></div>
+  <div class="full-height" ng-if="state == 1" ng-view></div>
   
+  <div class="error-view" ng-if="state == 0">
+    <h1>Voting Closed</h1>
+  </div>
+
+  <div class="error-view" ng-if="state == -1">
+    <h1>Connection Error</h1>
+    <p>The server refused the connection</p>
+  </div>
+
+  <div class="error-view" ng-if="state == -2">
+    <h1>Service Unavailable</h1>
+    <p>Please check network connection</p>
+  </div>
+
+  <div class="error-view" ng-if="state == -4">
+    <h1>SECV Client</h1>
+    <p>Waiting for server connection&hellip;</p>
+  </div>
+
+  <div class="error-view" ng-if="state == -5">
+    <h1>SECV Client</h1>
+    <p></p>
+    
+    <form>
+      <div class="form-row">
+        <label for="id">ID</label>
+        <input id="id" type="text" name="id" />
+      </div>
+
+      <div class="form-row">
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" />
+      </div>
+
+      <div class="form-row">
+        <button type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+
   <script>
     require('../app/app')
   </script>
