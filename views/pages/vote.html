@@ -107,10 +107,10 @@
               <div class="candidates-summary">
                 <div class="row">
                   <div class="col-xs-6 candidate"
-                        ng-repeat="(position, index) in data.positions"
+                        ng-repeat="(index, position) in data.positions"
                         ng-if="getVoteFromPosition(position.id, false)">
 
-                    <img ng-bind:src="'/assets/img/mockup/' + getVoteFromPosition(position.id).picture" />
+                    <img ng-src="{{ getVoteFromPosition(position.id).photo }}" />
 
                     <div class="info">
                       <h1>{{ getVoteFromPosition(position.id).name }}</h1>

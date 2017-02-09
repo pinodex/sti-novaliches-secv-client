@@ -39,7 +39,6 @@ module.exports = ($rootScope, $scope, vote) => {
   })
 
   vote.on('done', () => {
-    console.log($rootScope.data.candidates)
     $scope.state = 1
   })
 
