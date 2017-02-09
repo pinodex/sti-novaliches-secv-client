@@ -63,6 +63,34 @@ app.factory('vote', function ($rootScope, socket) {
   }
 })
 
+app.directive('focusOn', function ($timeout) {
+  return {
+    restrict: 'A',
+    
+    link: function (scope, element, attrs) {
+      scope.$on(attrs.focusOn, function (e) {
+        $timeout((function () {
+          element[0].focus();
+        }), 10);
+      });
+    }
+  };
+});
+
+app.directive('emptyOn', function ($timeout) {
+  return {
+    restrict: 'A',
+    
+    link: function (scope, element, attrs) {
+      scope.$on(attrs.focusOn, function (e) {
+        $timeout((function () {
+          element[0].value = '';
+        }), 10);
+      });
+    }
+  };
+});
+
 app.controller('UIController', require('./controllers/MainController'))
 
 app.controller('VoteController', require('./controllers/VoteController'))

@@ -36,7 +36,7 @@
             <form class="login-form" ng-submit="login()" autocomplete="off">
               <div class="form-item">
                 <label for="voterId">Voter&lsquo;s Identification Code:</label>
-                <input type="text" ng-model="voterId" ng-disabled="state.login == 1" />
+                <input type="text" ng-model="voterId" ng-disabled="state.login == 1" focus-on="focusVoterId" empty-on="emptyVoterId" maxlength="5" minlength="5" required />
               </div>
 
               <button class="big-button" type="submit" ng-disabled="state.login == 1">

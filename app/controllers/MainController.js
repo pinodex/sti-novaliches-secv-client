@@ -22,7 +22,9 @@ module.exports = ($rootScope, $scope, vote) => {
     if (connected) {
       $scope.state = -3
 
-      vote.emit('get:roster')
+      if ($rootScope.data.positions.length == 0 && $rootScope.data.candidates.length == 0) {
+        vote.emit('get:roster')
+      }
     }
 
     $scope.$apply()

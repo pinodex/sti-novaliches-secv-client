@@ -9,8 +9,6 @@
 
 module.exports = ($scope, $rootScope, $timeout, vote) => {
   function init() {
-    $scope.voterId = ''
-
     $scope.state = {
       login: 0,
       loggedIn: false,
@@ -24,15 +22,14 @@ module.exports = ($scope, $rootScope, $timeout, vote) => {
     $scope.user = null
     $scope.token = null
     $scope.userVotes = []
+
+    $scope.$broadcast('emptyVoterId')
+    $scope.$broadcast('focusVoterId')
   }
 
   init()
 
-  vote.on('response:auth', data => {
-    if (data == null) {
-      return init()
-    }
-
+  vote.on('auth', data => {
     $scope.user = data.user
     $scope.token = data.token
     $scope.state.loggedIn = true
@@ -40,6 +37,16 @@ module.exports = ($scope, $rootScope, $timeout, vote) => {
     $timeout(() => {
       $scope.state.ballot = true
     }, 500)
+  })
+
+  vote.on('auth:error', message => {
+    init()
+
+    alert(message)
+  })
+
+  vote.on('cast', () => {
+    $scope.state.finished = true
   })
   
   $scope.login = function () {
@@ -130,8 +137,15 @@ module.exports = ($scope, $rootScope, $timeout, vote) => {
   $scope.submitVotes = () => {
     $scope.state.actionButton = true
 
-    $timeout(() => {
-      $scope.state.finished = true
-    }, 1000)
+    let chosenCandidates = []
+
+    for (var i = 0; i < $scope.userVotes.length; i++) {
+      chosenCandidates.push($scope.userVotes[i].candidate)
+    }
+
+    vote.emit('cast', {
+      token: $scope.token,
+      ballot: chosenCandidates
+    })
   }
 }
