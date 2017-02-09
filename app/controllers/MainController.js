@@ -46,5 +46,10 @@ module.exports = ($rootScope, $scope, vote) => {
 
   vote.on('disconnect', () => {
     $scope.state = -2
+
+    $rootScope.data = {
+      positions: [],
+      candidates: []
+    }
   })
 }

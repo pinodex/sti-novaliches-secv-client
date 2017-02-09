@@ -1798,6 +1798,52 @@ form label {
   text-align: right;
 }
 
+.live .page-title {
+  text-align: center;
+  font-size: 52px;
+  font-weight: bold;
+  color: #fff;
+}
+.live .position {
+  text-align: center;
+}
+.live .position .title {
+  color: #fff;
+  border-bottom: 1px solid #fff;
+}
+.live .candidate {
+  overflow: hidden;
+  text-align: left;
+}
+.live .candidate .avatar {
+  background: #222;
+  color: #fff;
+  height: 52px;
+  width: 52px;
+  font-size: 36px;
+  text-align: center;
+  float: left;
+}
+.live .candidate .info {
+  margin-left: 60px;
+}
+.live .candidate .meter {
+  position: relative;
+  background: #333;
+  height: 15px;
+}
+.live .candidate .meter .fill {
+  position: absolute;
+  background: #fff200;
+  height: 15px;
+}
+.live .candidate h2, .live .candidate p {
+  margin: 0;
+}
+.live .candidate + .candidate {
+  margin-top: 15px;
+}
+
 .fade {
   transition: opacity 0.5s;
 }

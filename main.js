@@ -8,10 +8,11 @@
  */
 
 const {app, BrowserWindow} = require('electron'),
+      config = require('./config'),
       path = require('path')
 
 const iconPath = 'file://' + path.join(__dirname, 'assets', 'icon.ico')
-const entryPage = 'file://' + path.join(__dirname, 'views', 'index.html')
+let entryPage = 'file://' + path.join(__dirname, 'views', 'index.html')
 
 let _window
 
@@ -25,6 +26,10 @@ app.on('ready', () => {
   _window.on('closed', () => {
     _window = null
   })
+
+  if (config.live) {
+    entryPage += '#!/live'
+  }
 
   _window.loadURL(entryPage)
 });

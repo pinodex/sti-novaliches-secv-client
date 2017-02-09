@@ -23,6 +23,7 @@ app.config([
   ($locationProvider, $routeProvider) => {
     $routeProvider
       .when('/', { templateUrl: 'pages/vote.html' })
+      .when('/live', { templateUrl: 'pages/live.html' })
   }
 ])
 
@@ -92,5 +93,5 @@ app.directive('emptyOn', function ($timeout) {
 });
 
 app.controller('UIController', require('./controllers/MainController'))
-
 app.controller('VoteController', require('./controllers/VoteController'))
+app.controller('LiveController', require('./controllers/LiveController'))
