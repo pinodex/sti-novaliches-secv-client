@@ -1641,6 +1641,11 @@ form label {
   text-transform: uppercase;
   text-align: center;
 }
+.login-view .login-form input[type="text"]:disabled {
+  background: #ddd;
+  border-color: #005996;
+  color: #333;
+}
 .login-view .login-form button {
   margin-top: 15px;
   background: transparent;
@@ -1651,7 +1656,7 @@ form label {
   padding: 10px 15px;
   float: right;
 }
-.login-view .login-form button:hover {
+.login-view .login-form button:not(:disabled):hover {
   background: #fff;
   color: #111;
 }

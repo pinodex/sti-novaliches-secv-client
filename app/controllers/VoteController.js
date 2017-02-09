@@ -7,26 +7,45 @@
  * Copyright 2017, Raphael Marco <raphaelmarco@outlook.com>
  */
 
-module.exports = ($scope, $timeout) => {
+module.exports = ($scope, $rootScope, $timeout, vote) => {
   function init() {
-    $scope.loggedIn = false
-    $scope.showBallot = false
-    $scope.showSummary = false
-    $scope.showFinished = false
-    $scope.disableActionButton = false
-    $scope.positionIndex = 0
+    $scope.voterId = ''
 
+    $scope.state = {
+      login: 0,
+      loggedIn: false,
+      ballot: false,
+      summary: false,
+      finished: false,
+      actionButton: false,
+      positionIndex: 0
+    }
+
+    $scope.user = null
+    $scope.token = null
     $scope.userVotes = []
   }
 
   init()
-  
-  $scope.login = () => {
-    $scope.loggedIn = true
+
+  vote.on('response:auth', data => {
+    if (data == null) {
+      return init()
+    }
+
+    $scope.user = data.user
+    $scope.token = data.token
+    $scope.state.loggedIn = true
 
     $timeout(() => {
-      $scope.showBallot = true
+      $scope.state.ballot = true
     }, 500)
+  })
+  
+  $scope.login = function () {
+    $scope.state.login = 1
+    
+    vote.emit('auth', this.voterId)
   }
 
   $scope.logout = () => {
@@ -34,15 +53,15 @@ module.exports = ($scope, $timeout) => {
   }
 
   $scope.changePosition = (index) => {
-    $scope.positionIndex = index
+    $scope.state.positionIndex = index
   }
 
   $scope.nextPosition = () => {
-    $scope.positionIndex++
+    $scope.state.positionIndex++
   }
 
   $scope.isLastPosition = () => {
-    return $scope.positionIndex == $rootScope.data.positions.length - 1;
+    return $scope.state.positionIndex == $rootScope.data.positions.length - 1;
   }
 
   $scope.getVoteFromPosition = (positionId, getValue) => {
@@ -98,21 +117,21 @@ module.exports = ($scope, $timeout) => {
   }
 
   $scope.showVoteSummary = () => {
-    $scope.showBallot = false
-    $scope.showSummary = true
+    $scope.state.ballot = false
+    $scope.state.summary = true
   }
 
   $scope.hideVoteSummary = () => {
-    $scope.showSummary = false
-    $scope.showBallot = true
-    $scope.positionIndex = 0
+    $scope.state.summary = false
+    $scope.state.ballot = true
+    $scope.state.positionIndex = 0
   }
 
   $scope.submitVotes = () => {
-    $scope.disableActionButton = true
+    $scope.state.actionButton = true
 
     $timeout(() => {
-      $scope.showFinished = true
+      $scope.state.finished = true
     }, 1000)
   }
 }

@@ -284,6 +284,12 @@ form {
 
             text-transform: uppercase;
             text-align: center;
+
+            &:disabled {
+                background: #ddd;
+                border-color: #005996;
+                color: #333;
+            }
         }
 
         button {
@@ -296,7 +302,7 @@ form {
             padding: 10px 15px;
             float: right;
 
-            &:hover {
+            &:not(:disabled):hover {
                 background: #fff;
                 color: #111;
             }

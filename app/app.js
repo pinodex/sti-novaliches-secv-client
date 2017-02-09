@@ -17,13 +17,6 @@ const app = Angular.module('secApp', [
   AngularAnimate
 ])
 
-window.io = Ws('http://localhost:3333', {
-  transports: ['websocket'],
-  upgrade: false
-})
-
-window.voteChannel = io.channel('vote')
-
 app.config([
   '$locationProvider', '$routeProvider',
   
@@ -32,6 +25,43 @@ app.config([
       .when('/', { templateUrl: 'pages/vote.html' })
   }
 ])
+
+app.factory('socket', function ($rootScope) {
+  return Ws('http://localhost:3333', {
+    transports: ['websocket'],
+    upgrade: false
+  })
+})
+
+app.factory('vote', function ($rootScope, socket) {
+  const channel = socket.channel('vote')
+
+  return {
+    channel: channel,
+
+    on: function (eventName, callback) {
+      channel.on(eventName, function () {
+        const args = arguments
+
+        $rootScope.$apply(function () {
+          callback.apply(channel, args)
+        })
+      })
+    },
+
+    emit: function (eventName, data, callback) {
+      channel.emit(eventName, data, function () {
+        const args = arguments
+
+        $rootScope.$apply(function () {
+          if (callback) {
+            callback.apply(channel, args)
+          }
+        })
+      })
+    }
+  }
+})
 
 app.controller('UIController', require('./controllers/MainController'))
 

@@ -22,6 +22,11 @@
     <p>Please check network connection</p>
   </div>
 
+  <div class="error-view" ng-if="state == -3">
+    <h1>SECV Client</h1>
+    <p>Waiting for roster data&hellip;</p>
+  </div>
+
   <div class="error-view" ng-if="state == -4">
     <h1>SECV Client</h1>
     <p>Waiting for server connection&hellip;</p>
