@@ -79,6 +79,10 @@ form {
     width: 100%;
     
     @include center-block();
+
+    &.fit {
+        padding: 0 50px;
+    }
 }
 
 .full-height {
@@ -481,19 +485,28 @@ form {
 
 .live {
     .page-title {
-        text-align: center;
+        font-family: 'Oswald';
         font-size: 52px;
         font-weight: bold;
+        text-align: center;
         color: #fff;
+
+        margin-bottom: 0;
     }
 
     .position {
         text-align: center;
+        padding: 0 20px;
 
         .title {
             color: #fff;
-            border-bottom: 1px solid #fff;
+            margin-bottom: 10px;
         }
+    }
+
+    .candidates {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 15px;
     }
 
     .candidate {
@@ -501,35 +514,46 @@ form {
         text-align: left;
 
         .avatar {
-            background: #222;
-            color: #fff;
+            background: rgba(51, 51, 51, 0.75);
+            color: rgba(255, 255, 255, 0.75);
 
             height: 52px;
             width: 52px;
 
-            font-size: 36px;
+            font-size: 44px;
             text-align: center;
             float: left;
+
+            border-radius: 100%;
         }
 
         .info {
             margin-left: 60px;
+            color: #fff;
         }
 
         .meter {
             position: relative;
-            background: #333;
-            height: 15px;
+            height: 10px;
 
             .fill {
                 position: absolute;
                 background: #fff200;
-                height: 15px;
+                height: 10px;
             }
         }
 
+        .percentage-container {
+            text-align: right;
+            margin-top: -5px;
+        }
+
         h2, p {
-            margin: 0
+            margin: 0;
+        }
+
+        h2 {
+            margin: 3px 0;
         }
 
         & + .candidate {

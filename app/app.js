@@ -12,31 +12,14 @@ const Angular = require('angular'),
       AngularAnimate = require('angular-animate'),
       Ws = require('adonis-websocket-client')
 
+const config = require('../config')
+
 const app = Angular.module('secApp', [
   AngularRoute,
   AngularAnimate
 ])
 
-app.config([
-  '$locationProvider', '$routeProvider',
-  
-  ($locationProvider, $routeProvider) => {
-    $routeProvider
-      .when('/', { templateUrl: 'pages/vote.html' })
-      .when('/live', { templateUrl: 'pages/live.html' })
-  }
-])
-
-app.factory('socket', function ($rootScope) {
-  return Ws('http://localhost:3333', {
-    transports: ['websocket'],
-    upgrade: false
-  })
-})
-
-app.factory('vote', function ($rootScope, socket) {
-  const channel = socket.channel('vote')
-
+const socketFactory = ($rootScope, channel) => {
   return {
     channel: channel,
 
@@ -62,6 +45,35 @@ app.factory('vote', function ($rootScope, socket) {
       })
     }
   }
+}
+
+app.config([
+  '$locationProvider', '$routeProvider',
+  
+  ($locationProvider, $routeProvider) => {
+    $routeProvider
+      .when('/', { templateUrl: 'pages/vote.html' })
+      .when('/live', { templateUrl: 'pages/live.html' })
+  }
+])
+
+app.factory('socket', function ($rootScope) {
+  return Ws(config.server, {
+    transports: ['websocket'],
+    upgrade: false
+  })
+})
+
+app.factory('socketMain', function ($rootScope, socket) {
+  return socketFactory($rootScope, socket.channel('main'))
+})
+
+app.factory('socketVote', function ($rootScope, socket) {
+  return socketFactory($rootScope, socket.channel('vote'))
+})
+
+app.factory('socketLive', function ($rootScope, socket) {
+  return socketFactory($rootScope, socket.channel('live'))
 })
 
 app.directive('focusOn', function ($timeout) {

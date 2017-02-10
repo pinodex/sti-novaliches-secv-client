@@ -1339,19 +1339,19 @@ table {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 100;
-  src: local("Roboto Thin"), local("Roboto-Thin"), url("fonts/Roboto-Thin.ttf") format("ttf");
+  src: local("Roboto Thin"), local("Roboto-Thin"), url("fonts/Roboto-Thin.ttf") format("woff2");
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
-  src: local("Roboto Light"), local("Roboto-Light"), url("fonts/Roboto-Light.ttf") format("ttf");
+  src: local("Roboto Light"), local("Roboto-Light"), url("fonts/Roboto-Light.ttf") format("woff2");
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: local("Roboto Regular"), local("Roboto-Regular"), url("fonts/Roboto-Regular.ttf") format("ttf");
+  src: local("Roboto Regular"), local("Roboto-Regular"), url("fonts/Roboto-Regular.ttf") format("woff2");
 }
 @font-face {
   font-family: 'Oswald';
@@ -1463,6 +1463,9 @@ form label {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+.container.fit {
+  padding: 0 50px;
 }
 
 .full-height {
@@ -1799,46 +1802,61 @@ form label {
 }
 
 .live .page-title {
-  text-align: center;
+  font-family: 'Oswald';
   font-size: 52px;
   font-weight: bold;
+  text-align: center;
   color: #fff;
+  margin-bottom: 0;
 }
 .live .position {
   text-align: center;
+  padding: 0 20px;
 }
 .live .position .title {
   color: #fff;
-  border-bottom: 1px solid #fff;
+  margin-bottom: 10px;
+}
+.live .candidates {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
 }
 .live .candidate {
   overflow: hidden;
   text-align: left;
 }
 .live .candidate .avatar {
-  background: #222;
-  color: #fff;
+  background: rgba(51, 51, 51, 0.75);
+  color: rgba(255, 255, 255, 0.75);
   height: 52px;
   width: 52px;
-  font-size: 36px;
+  font-size: 44px;
   text-align: center;
   float: left;
+  border-radius: 100%;
 }
 .live .candidate .info {
   margin-left: 60px;
+  color: #fff;
 }
 .live .candidate .meter {
   position: relative;
-  background: #333;
-  height: 15px;
+  height: 10px;
 }
 .live .candidate .meter .fill {
   position: absolute;
   background: #fff200;
-  height: 15px;
+  height: 10px;
+}
+.live .candidate .percentage-container {
+  text-align: right;
+  margin-top: -5px;
 }
 .live .candidate h2, .live .candidate p {
   margin: 0;
+}
+.live .candidate h2 {
+  margin: 3px 0;
 }
 .live .candidate + .candidate {
   margin-top: 15px;

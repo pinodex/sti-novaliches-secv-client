@@ -7,7 +7,12 @@
  * Copyright 2017, Raphael Marco <raphaelmarco@outlook.com>
  */
 
-module.exports = ($scope, $rootScope, $timeout, vote) => {
+module.exports = ($scope, $rootScope, $timeout, socketVote) => {
+  $scope.data = {
+    positions: [],
+    candidates: []
+  }
+
   function init() {
     $scope.state = {
       login: 0,
@@ -29,7 +34,32 @@ module.exports = ($scope, $rootScope, $timeout, vote) => {
 
   init()
 
-  vote.on('auth', data => {
+  socketVote.channel.connect((error, connected) => {
+    $scope.state.login = -1
+
+    $scope.data = {
+      positions: [],
+      candidates: []
+    }
+
+    socketVote.emit('get:roster')
+  })
+
+  socketVote.on('positions', data => {
+    $scope.data.positions = data
+  })
+
+  socketVote.on('candidate', data => {
+    data.photo = URL.createObjectURL(new Blob([data.photo]))
+
+    $scope.data.candidates.push(data)
+  })
+
+  socketVote.on('done', () => {
+    $scope.state.login = 0
+  })
+
+  socketVote.on('auth', data => {
     $scope.user = data.user
     $scope.token = data.token
     $scope.state.loggedIn = true
@@ -39,20 +69,29 @@ module.exports = ($scope, $rootScope, $timeout, vote) => {
     }, 500)
   })
 
-  vote.on('auth:error', message => {
+  socketVote.on('auth:error', message => {
     init()
 
     alert(message)
   })
 
-  vote.on('cast', () => {
+  socketVote.on('cast', () => {
     $scope.state.finished = true
+  })
+
+  $scope.$on('$destroy', () => {
+    socketVote.channel.off('positions')
+    socketVote.channel.off('candidate')
+    socketVote.channel.off('done')
+    socketVote.channel.off('auth')
+    socketVote.channel.off('auth:error')
+    socketVote.channel.off('cast')
   })
   
   $scope.login = function () {
     $scope.state.login = 1
     
-    vote.emit('auth', this.voterId)
+    socketVote.emit('auth', this.voterId)
   }
 
   $scope.logout = () => {
@@ -68,7 +107,7 @@ module.exports = ($scope, $rootScope, $timeout, vote) => {
   }
 
   $scope.isLastPosition = () => {
-    return $scope.state.positionIndex == $rootScope.data.positions.length - 1;
+    return $scope.state.positionIndex == $scope.data.positions.length - 1;
   }
 
   $scope.getVoteFromPosition = (positionId, getValue) => {
@@ -86,13 +125,13 @@ module.exports = ($scope, $rootScope, $timeout, vote) => {
       return vote
     }
 
-    return $rootScope.data.candidates.find(item => {
+    return $scope.data.candidates.find(item => {
       return vote.candidate == item.id
     })
   }
 
   $scope.getPosition = positionId => {
-    return $rootScope.data.positions.find(item => {
+    return $scope.data.positions.find(item => {
       return item.id == positionId
     })
   }
@@ -120,7 +159,7 @@ module.exports = ($scope, $rootScope, $timeout, vote) => {
   }
 
   $scope.canFinish = () => {
-    return $scope.userVotes.length == $rootScope.data.positions.length
+    return $scope.userVotes.length == $scope.data.positions.length
   }
 
   $scope.showVoteSummary = () => {
@@ -143,7 +182,7 @@ module.exports = ($scope, $rootScope, $timeout, vote) => {
       chosenCandidates.push($scope.userVotes[i].candidate)
     }
 
-    vote.emit('cast', {
+    socketVote.emit('cast', {
       token: $scope.token,
       ballot: chosenCandidates
     })

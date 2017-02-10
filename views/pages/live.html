@@ -5,7 +5,7 @@
       <div class="line"></div>
     </div>
 
-    <div class="container">
+    <div class="container fit">
       <div class="row main live">
         <div class="col-xs">
           <div class="row">
@@ -15,17 +15,25 @@
           </div>
 
           <div class="row">
-            <div class="col-xs position" ng-repeat="position in data">
-              <h1 class="title">{{ position.name }}</h1>
+            <div class="col-xs-4 position" ng-repeat="entry in data">
+              <h1 class="title">{{ entry.position.name }}</h1>
 
               <div class="candidates">
-                <div class="candidate" ng-repeat="(i, candidate) in position.candidates">
+                <div class="candidate" ng-repeat="(i, candidate) in entry.candidates">
                   <div class="avatar">?</div>
                   <div class="info">
-                    <h2>Candidate {{ getLetter(i) }}</h2>
+                    <h2>{{ candidate.name }}</h2>
 
-                    <div class="meter">
-                      <div class="fill" ng-style="{ width: candidate.percentage + '%' }"></div>
+                    <div class="row">
+                      <div class="col-xs-9">
+                        <div class="meter">
+                          <div class="fill" ng-style="{ width: candidate.percentage + '%' }"></div>
+                        </div>
+                      </div>
+
+                      <div class="col-xs-3 percentage-container">
+                        <span class="percentage">{{ candidate.percentage }}%</span>
+                      </div>
                     </div>
                   </div>
                 </div>

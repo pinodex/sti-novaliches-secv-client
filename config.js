@@ -1,4 +1,4 @@
 module.exports = {
-  socket: 'http://localhost:3333',
+  server: 'http://localhost:3333',
   live: false
 }
