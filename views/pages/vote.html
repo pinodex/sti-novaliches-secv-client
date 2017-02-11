@@ -8,7 +8,7 @@
     <div class="container full-height">
       <div class="row main full-height">
         <div class="navigator full-height" ng-class="{ 'col-xs-5' : !state.loggedIn, 'col-xs-3' : state.loggedIn }">
-          <div class="user-info" ng-show="state.loggedIn">
+          <div class="user-info fade" ng-show="state.ballot">
             <div class="content">
               <p>Logged in as</p>
               <h2>{{ user.name }}</h2>

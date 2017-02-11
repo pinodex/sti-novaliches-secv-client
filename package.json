@@ -15,7 +15,8 @@
     "adonis-websocket-client": "^1.0.2",
     "angular": "^1.6.1",
     "angular-animate": "^1.6.1",
-    "angular-route": "^1.6.1"
+    "angular-route": "^1.6.1",
+    "shuffle-array": "^1.0.0"
   },
   "devDependencies": {
     "electron": "^1.4.15",

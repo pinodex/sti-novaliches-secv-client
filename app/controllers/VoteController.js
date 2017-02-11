@@ -7,6 +7,8 @@
  * Copyright 2017, Raphael Marco <raphaelmarco@outlook.com>
  */
 
+const shuffle = require('shuffle-array')
+
 module.exports = ($scope, $rootScope, $timeout, socketVote) => {
   $scope.data = {
     positions: [],
@@ -92,6 +94,8 @@ module.exports = ($scope, $rootScope, $timeout, socketVote) => {
     $scope.state.login = 1
     
     socketVote.emit('auth', this.voterId)
+
+    shuffle($scope.data.candidates)
   }
 
   $scope.logout = () => {
