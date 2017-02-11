@@ -11,22 +11,23 @@ module.exports = ($scope, $rootScope, $timeout, socketLive) => {
   $scope.data = []
 
   socketLive.channel.connect((error, connected) => {
-    if (error) {
-      alert('Cannot establish server connection')
-    }
-
-    if (connected) {
-      socketLive.emit('update')
-
-      setInterval(() => socketLive.emit('update'), 5000)
-    }
+    socketLive.emit('update')
   })
 
   socketLive.on('update', data => {
     $scope.data = data
   })
 
+  socketLive.on('casted', () => {
+    socketLive.emit('update')
+  })
+
   $scope.getLetter = number => {
     return alphabet[number]
   }
+
+  $scope.$on('$destroy', () => {
+    socketLive.off('update')
+    socketLive.off('casted')
+  })
 }

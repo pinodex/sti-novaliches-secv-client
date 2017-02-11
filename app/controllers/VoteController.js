@@ -82,12 +82,12 @@ module.exports = ($scope, $rootScope, $timeout, socketVote) => {
   })
 
   $scope.$on('$destroy', () => {
-    socketVote.channel.off('positions')
-    socketVote.channel.off('candidate')
-    socketVote.channel.off('done')
-    socketVote.channel.off('auth')
-    socketVote.channel.off('auth:error')
-    socketVote.channel.off('cast')
+    socketVote.off('positions')
+    socketVote.off('candidate')
+    socketVote.off('done')
+    socketVote.off('auth')
+    socketVote.off('auth:error')
+    socketVote.off('cast')
   })
   
   $scope.login = function () {

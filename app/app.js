@@ -33,6 +33,10 @@ const socketFactory = ($rootScope, channel) => {
       })
     },
 
+    off: function (eventName) {
+      channel.off(eventName)
+    },
+
     emit: function (eventName, data, callback) {
       channel.emit(eventName, data, function () {
         const args = arguments
