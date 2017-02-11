@@ -77,7 +77,7 @@ module.exports = ($scope, $rootScope, $timeout, socketVote) => {
     alert(message)
   })
 
-  socketVote.on('cast', () => {
+  socketVote.on('casted', () => {
     $scope.state.finished = true
   })
 
