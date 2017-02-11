@@ -7,12 +7,12 @@
  * Copyright 2017, Raphael Marco <raphaelmarco@outlook.com>
  */
 
+require('dotenv').config()
+
 const Angular = require('angular'),
       AngularRoute = require('angular-route'),
       AngularAnimate = require('angular-animate'),
       Ws = require('adonis-websocket-client')
-
-const config = require('../config')
 
 const app = Angular.module('secApp', [
   AngularRoute,
@@ -58,7 +58,7 @@ app.config([
 ])
 
 app.factory('socket', function ($rootScope) {
-  return Ws(config.server, {
+  return Ws(process.env.SERVER, {
     transports: ['websocket'],
     upgrade: false
   })

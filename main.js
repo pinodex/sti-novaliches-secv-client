@@ -7,12 +7,13 @@
  * Copyright 2017, Raphael Marco <raphaelmarco@outlook.com>
  */
 
+require('dotenv').config()
+
 const {app, BrowserWindow} = require('electron'),
-      config = require('./config'),
       path = require('path')
 
 let _window
-let entryPage = 'file://' + path.join(__dirname, 'views', 'index.html')
+let entryPage = `file://${path.join(__dirname, 'views', 'index.html')}`
 
 app.on('ready', () => {
   _window = new BrowserWindow({
@@ -24,7 +25,7 @@ app.on('ready', () => {
     _window = null
   })
 
-  if (config.live) {
+  if (process.env.LIVE == 'true') {
     entryPage += '#!/live'
   }
 
