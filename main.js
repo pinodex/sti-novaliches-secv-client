@@ -11,15 +11,12 @@ const {app, BrowserWindow} = require('electron'),
       config = require('./config'),
       path = require('path')
 
-const iconPath = 'file://' + path.join(__dirname, 'assets', 'icon.ico')
-let entryPage = 'file://' + path.join(__dirname, 'views', 'index.html')
-
 let _window
+let entryPage = 'file://' + path.join(__dirname, 'views', 'index.html')
 
 app.on('ready', () => {
   _window = new BrowserWindow({
     title: 'SECV Client',
-    icon: iconPath,
     kiosk: process.env.NODE_ENV != 'dev'
   })
 
