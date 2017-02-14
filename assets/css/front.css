@@ -1721,6 +1721,8 @@ form label {
 .position-view .candidates .candidate img {
   float: left;
   margin-right: 10px;
+  height: 128px;
+  width: 128px;
 }
 .position-view .candidates .candidate .info h2 {
   margin: 0;
