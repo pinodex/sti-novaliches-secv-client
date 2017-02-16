@@ -131,6 +131,7 @@ form {
         padding-top: 72px;
 
         text-align: right;
+        /*
         border-right-width: 1px;
         border-right-style: solid;
         border-image: linear-gradient(
@@ -138,6 +139,7 @@ form {
             rgba(255, 255, 255, 0.5),
             rgba(255, 255, 255, 0)
         ) 1 75%;
+        */
 
         transition: all 0.5s cubic-bezier(0.15, 0.89, 0.36, 1);
 
@@ -351,7 +353,7 @@ form {
             padding: 10px;
             border: 2px solid transparent;
 
-            height: 280px;
+            height: 350px;
 
             .selected {
                 display: flex;
@@ -527,6 +529,13 @@ form {
             float: left;
 
             border-radius: 100%;
+
+            img {
+                height: 100%;
+                width: 100%;
+            }
+
+            overflow: hidden;
         }
 
         .info {

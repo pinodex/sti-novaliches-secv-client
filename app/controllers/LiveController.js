@@ -15,6 +15,16 @@ module.exports = ($scope, $rootScope, $timeout, socketLive) => {
   })
 
   socketLive.on('update', data => {
+    for (var i = 0; i < data.length; i++) {
+      for (var x = 0; x < data[i].candidates.length; x++) {
+        if (data[i].candidates[x].photo != null) {
+          data[i].candidates[x].photo = URL.createObjectURL(new Blob(
+            [data[i].candidates[x].photo]
+          ))
+        }
+      }
+    }
+
     $scope.data = data
   })
 

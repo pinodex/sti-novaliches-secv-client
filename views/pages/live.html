@@ -20,18 +20,22 @@
 
               <div class="candidates">
                 <div class="candidate" ng-repeat="(i, candidate) in entry.candidates">
-                  <div class="avatar">?</div>
+                  <div class="avatar">
+                    <img ng-src="{{ candidate.photo }}" ng-if="candidate.photo != null" />
+                    <span ng-if="candidate.photo == null">?</span>
+                  </div>
+
                   <div class="info">
                     <h2>{{ candidate.name }}</h2>
 
                     <div class="row">
-                      <div class="col-xs-9">
+                      <div class="col-xs-8">
                         <div class="meter">
                           <div class="fill" ng-style="{ width: candidate.percentage + '%' }"></div>
                         </div>
                       </div>
 
-                      <div class="col-xs-3 percentage-container">
+                      <div class="col-xs-4 percentage-container">
                         <span class="percentage">{{ candidate.percentage }}%</span>
                       </div>
                     </div>
